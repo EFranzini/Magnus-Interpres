@@ -265,6 +265,17 @@
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
+
+ // --- Confirm before closing/reloading the tab ---
+ function hasContent() {
+   return rows.some(r => r.leftTa.value.trim() || r.rightTa.value.trim());
+ }
+
+ window.addEventListener('beforeunload', (e) => {
+   if (!hasContent()) return; // nothing to lose, let the tab close freely
+   e.preventDefault();
+   e.returnValue = ''; // required by some browsers (Chrome) to trigger the prompt
+ });
 </script>
 </body>
 </html>
