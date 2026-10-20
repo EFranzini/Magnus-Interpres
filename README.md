@@ -20,7 +20,7 @@ The interface is intentionally styled like a classic Windows 95 application. It 
 1. Open `magnus_interpres.html` in a web browser.
 2. Enter your text into the left and right boxes.
 3. Use the **➕** button to add another pair.
-4. Use the **✖** button on a pair to remove it.
+4. Use the **✖** button on a pair to remove it. Just double click it.
 5. Use the **🛫** button to export all right-side text to `magnus_interpres_export.txt`.
 6. To reset the workspace, click the **♻️** button three times within 1.5 seconds.
 
