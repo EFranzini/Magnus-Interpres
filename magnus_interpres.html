@@ -150,6 +150,7 @@
 <script>
   const grid = document.getElementById('rowsGrid');
   const pairCountEl = document.getElementById('pairCount');
+  const DELETE_DOUBLE_CLICK_MS = 300; // max time between the two clicks to remove a pair
   let rows = []; // { leftCell, rightCell, leftTa, rightTa, delBtn }
 
   function makeCell(withDelete) {
@@ -168,7 +169,7 @@
       delBtn = document.createElement('button');
       delBtn.className = 'btn95 del-btn';
       delBtn.textContent = '\u2716';
-      delBtn.title = 'Remove this pair';
+      delBtn.title = 'Double-click to remove this pair';
       cell.appendChild(delBtn);
     }
     return { cell, ta, delBtn };
@@ -188,7 +189,17 @@
       leftTa: left.ta, rightTa: right.ta, delBtn: right.delBtn
     };
 
-    right.delBtn.addEventListener('click', () => removeRow(rowObj));
+    // Removal requires two clicks within DELETE_DOUBLE_CLICK_MS (0.3s)
+    let lastDeleteClick = 0;
+    right.delBtn.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastDeleteClick <= DELETE_DOUBLE_CLICK_MS) {
+        lastDeleteClick = 0;
+        removeRow(rowObj);
+      } else {
+        lastDeleteClick = now;
+      }
+    });
 
     if (beforeNode) {
       grid.insertBefore(left.cell, beforeNode);
